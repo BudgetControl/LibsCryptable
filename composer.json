@@ -1,6 +1,6 @@
 {
-    "name": "budgetcontrol/mailer",
-    "description": "The MailerService library provides functionality for sending emails. It is used by the BC (Business Communication) module of the application.",
+    "name": "budgetcontrol/cryptable",
+    "description": "The cryptable package",
     "type": "package",
     "license": "AGPL",
     "repositories": {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "BudgetcontrolLibs\\NAME\\": "libs/"
+            "BudgetcontrolLibs\\Crypt\\": "libs/"
         }
     },
     "authors": [
