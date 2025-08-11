@@ -5,7 +5,7 @@ namespace BudgetcontrolLibs\Crypt\Traits;
 
 trait Hash {
 
-    public function hash(string $key): array
+    public function hash(string $key): string
     {
         return hash('sha256', $key);
     }
