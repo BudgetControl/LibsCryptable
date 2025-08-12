@@ -49,6 +49,10 @@ class CryptableService
             throw new MissingKeyException();
         }
 
+        if (empty($text)) {
+            return null;
+        }
+
         $key = $this->key;
         $iv = $this->generateIv($key);
         $encrypted = openssl_encrypt($text, $this->cipher, base64_decode(substr($key, 7)), 0, $iv);
@@ -65,6 +69,10 @@ class CryptableService
 
         if(!isset($this->key)) {
             throw new MissingKeyException();
+        }
+
+        if (empty($encrypted)) {
+            return null;
         }
 
         $key = $this->key;
