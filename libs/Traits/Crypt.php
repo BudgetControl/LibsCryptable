@@ -3,40 +3,12 @@ declare(strict_types=1);
 
 namespace BudgetcontrolLibs\Crypt\Traits;
 
-use BudgetcontrolLibs\Crypt\Exceptions\MissingKeyException;
+use BudgetcontrolLibs\Crypt\Service\CryptableService;
 
-/**
- * CryptableService class provides encryption and decryption services.
- *
- * @package LibsCryptable
- * @subpackage Service
- */
-class Crypt
-{
-    private string $key;
-    private string $cipher;
+trait Crypt {
 
-    /**
-     * CryptableService constructor.
-     *
-     * @param string $key The encryption key to be used by the service.
-     */
-    public function __construct(string $key, string $cipher = 'aes-256-cbc')
-    {
-        $this->key = $key;
-        $this->cipher = $cipher;
-    }
+    protected string $key;
 
-    /**
-     * Generates an initialization vector (IV) based on the given text.
-     *
-     * @param string $text The text used to generate the IV.
-     * @return string The generated IV.
-     */
-    private function generateIv($text) {
-        return substr(md5($text), 0, 16);
-    }
-    
     /**
      * Encrypts the given text.
      *
@@ -44,21 +16,10 @@ class Crypt
      * @return string The encrypted text.
      */
     public function encrypt($text) {
-
-        if(!isset($this->key)) {
-            throw new MissingKeyException();
-        }
-
-        if (empty($text)) {
-            return null;
-        }
-
-        $key = $this->key;
-        $iv = $this->generateIv($key);
-        $encrypted = openssl_encrypt($text, $this->cipher, base64_decode(substr($key, 7)), 0, $iv);
-        return $encrypted;
+        $service = new CryptableService($this->key);
+        return $service->encrypt($text);
     }
-    
+
     /**
      * Decrypts the given encrypted data.
      *
@@ -66,18 +27,8 @@ class Crypt
      * @return string The decrypted data.
      */
     public function decrypt($encrypted) {
-
-        if(!isset($this->key)) {
-            throw new MissingKeyException();
-        }
-
-        if (empty($encrypted)) {
-            return null;
-        }
-
-        $key = $this->key;
-        $iv = $this->generateIv($key);
-        $decrypted = openssl_decrypt($encrypted, $this->cipher, base64_decode(substr($key, 7)), 0, $iv);
-        return $decrypted;
+        $service = new CryptableService($this->key);
+        return $service->decrypt($encrypted);
     }
+
 }
