@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace BudgetcontrolLibs\Crypt\Service;
+namespace BudgetcontrolLibs\Crypt\Traits;
 
 use BudgetcontrolLibs\Crypt\Exceptions\MissingKeyException;
 
@@ -11,7 +11,7 @@ use BudgetcontrolLibs\Crypt\Exceptions\MissingKeyException;
  * @package LibsCryptable
  * @subpackage Service
  */
-class CryptableService
+class Crypt
 {
     private string $key;
     private string $cipher;
